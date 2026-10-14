@@ -1,0 +1,38 @@
+### Тест 1. Регистрация
+POST http://localhost:5000/api/register
+Content-Type: application/json
+
+{
+  "username": "anna",
+  "email": "anna@mail.ru",
+  "password": "Passw0rd!",
+  "role": "organizer",
+  "is_deaf": true
+}
+
+### Тест 2. Логин - скопируй отсюда токен
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+  "email": "anna@mail.ru",
+  "password": "Passw0rd!"
+}
+
+### Тест 3. Создание мероприятия (нужен токен из Теста 2)
+POST http://localhost:5000/api/events
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoib3JnYW5pemVyIiwiZXhwIjoxNzkyMDc1NTM0fQ.dbn1-NGTAglGbwflW2vy2YCul9FHJAbkswPiOt6rZHE
+Content-Type: application/json
+
+{
+  "title": "Кинопросмотр с сурдопереводом",
+  "description": "Инклюзивный показ фильма",
+  "event_date": "2026-11-01 12:00:00",
+  "location": "Библиотека им. Некрасова",
+  "is_inclusive": true,
+  "sign_language": true,
+  "visual_alerts": true
+}
+
+### Тест 4. Список мероприятий (без токена)
+GET http://localhost:5000/api/events
