@@ -1,4 +1,4 @@
-﻿name: Day3 Backend Check
+name: Day3 Backend Check
 on: push
 
 jobs:
@@ -26,8 +26,8 @@ jobs:
           grep -q "generate_token" utils/auth_helpers.py && echo "PASS"
           grep -q "role_required" utils/auth_helpers.py && echo "PASS"
       - name: Check accessibility
-        run: grep -q "accessibility" utils/accessibility.py && echo "PASS"
+        run: "grep -q 'accessibility' utils/accessibility.py && echo 'PASS'"
       - name: Syntax check
         run: python -m py_compile app.py config.py models.py routes/*.py utils/*.py
       - name: Done
-        run: echo "PASS"
+        run: "echo 'PASS: Day3 Backend Check completed'"
