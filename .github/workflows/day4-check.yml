@@ -34,4 +34,4 @@ jobs:
           grep -l "role=" templates/*.html && echo "PASS: role" || echo "FAIL: no role"
       - name: Syntax check app.py
         run: python -m py_compile app.py
-      - run: echo "PASS: Day4 Frontend Check completed"
+      - run: "'echo PASS: Day4 Frontend Check completed'"
