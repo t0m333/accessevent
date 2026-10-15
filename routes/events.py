@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Blueprint, jsonify, request
 
 from models import db, Event
@@ -28,11 +30,17 @@ def get_event(event_id):
 def create_event(user):
     data = request.get_json(silent=True) or {}
     title = (data.get("title") or "").strip()
-    event_date = data.get("event_date")
+    event_date_raw = data.get("event_date")
+
     if not title or len(title) > 100:
         return jsonify({"message": "Название обязательно, до 100 символов"}), 400
-    if not event_date:
+    if not event_date_raw:
         return jsonify({"message": "Укажите дату и время"}), 400
+
+    try:
+        event_date = datetime.datetime.fromisoformat(str(event_date_raw))
+    except (ValueError, TypeError):
+        return jsonify({"message": "Неверный формат даты"}), 400
 
     event = Event(
         title=title,
@@ -57,9 +65,14 @@ def update_event(user, event_id):
     if event.organizer_id != user.id and user.role != "admin":
         return jsonify({"message": "Можно редактировать только свои мероприятия"}), 403
     data = request.get_json(silent=True) or {}
-    for field in ("title", "description", "event_date", "location"):
+    for field in ("title", "description", "location"):
         if field in data:
             setattr(event, field, data[field])
+    if "event_date" in data:
+        try:
+            event.event_date = datetime.datetime.fromisoformat(str(data["event_date"]))
+        except (ValueError, TypeError):
+            return jsonify({"message": "Неверный формат даты"}), 400
     for field in ("is_inclusive", "sign_language", "visual_alerts"):
         if field in data:
             setattr(event, field, bool(data[field]))

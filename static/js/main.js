@@ -67,3 +67,67 @@ document.addEventListener('DOMContentLoaded', function() {
 if (typeof module !== 'undefined') {
     module.exports = { showNotification, setupFormValidation };
 }
+
+
+/* ============================================================
+   Подводная тема: пузырьковый бурст при скролле вверх/вниз
+   ============================================================ */
+
+/**
+ * Создаёт кучу пузырьков на весь экран.
+ * @param {number} count - сколько пузырьков создать
+ */
+function createBubbleBurst(count) {
+    const container = document.getElementById('bubbleBurst');
+    if (!container) return;
+
+    // Очищаем предыдущие
+    container.innerHTML = '';
+
+    for (let i = 0; i < count; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+
+        const size = 40 + Math.random() * 100;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.left = (Math.random() * 100) + '%';
+        bubble.style.bottom = '-200px';
+        bubble.style.animationDuration = (2 + Math.random() * 2) + 's';
+        bubble.style.animationDelay = (Math.random() * 0.8) + 's';
+
+        container.appendChild(bubble);
+    }
+
+    container.classList.add('active');
+
+    // Убираем бурст через 3.5 секунды
+    setTimeout(function() {
+        container.classList.remove('active');
+    }, 3500);
+}
+
+/**
+ * Следит за скроллом: при достижении верха или низа — запускает бурст пузырьков.
+ */
+(function setupScrollBubbles() {
+    let lastBurst = 0;
+    const COOLDOWN = 4000; // не чаще раза в 4 секунды
+
+    window.addEventListener('scroll', function() {
+        const now = Date.now();
+        if (now - lastBurst < COOLDOWN) return;
+
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+        // В самом верху (первые 30px) или в самом низу (последние 30px)
+        const atTop = scrollTop < 30;
+        const atBottom = scrollTop >= docHeight - 30;
+
+        if (atTop || atBottom) {
+            createBubbleBurst(60);
+            lastBurst = now;
+        }
+    }, { passive: true });
+})();

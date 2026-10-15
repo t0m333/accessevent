@@ -7,6 +7,62 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="bubble-burst" id="bubbleBurst"></div>
+
+    <div class="seaweed seaweed-1"></div>
+    <div class="seaweed seaweed-2"></div>
+    <div class="seaweed seaweed-3"></div>
+    <div class="seaweed seaweed-4"></div>
+    <div class="seaweed seaweed-5"></div>
+    <div class="seaweed seaweed-6"></div>
+
+    <div class="jellyfish jellyfish-1"></div>
+    <div class="jellyfish jellyfish-2"></div>
+    <div class="jellyfish jellyfish-3"></div>
+
+    <div class="fish fish-1">
+        <svg viewBox="0 0 50 25" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="25" cy="12" rx="15" ry="8" fill="#ff9800"/>
+            <polygon points="10,12 0,4 0,20" fill="#ff6d00"/>
+            <circle cx="32" cy="10" r="2" fill="#000"/>
+            <circle cx="32" cy="10" r="1" fill="#fff"/>
+        </svg>
+    </div>
+    <div class="fish fish-2">
+        <svg viewBox="0 0 50 25" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="25" cy="12" rx="15" ry="8" fill="#e91e63"/>
+            <polygon points="10,12 0,4 0,20" fill="#ad1457"/>
+            <circle cx="32" cy="10" r="2" fill="#000"/>
+            <circle cx="32" cy="10" r="1" fill="#fff"/>
+        </svg>
+    </div>
+    <div class="fish fish-3">
+        <svg viewBox="0 0 50 25" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="25" cy="12" rx="15" ry="8" fill="#9c27b0"/>
+            <polygon points="10,12 0,4 0,20" fill="#6a1b9a"/>
+            <circle cx="32" cy="10" r="2" fill="#000"/>
+            <circle cx="32" cy="10" r="1" fill="#fff"/>
+        </svg>
+    </div>
+
     <header role="banner">
         <nav aria-label="Главное меню">
             <a href="{{ url_for('index_page') }}" class="nav-link">Главная</a>
@@ -15,14 +71,103 @@
             <a href="{{ url_for('register_page') }}" class="nav-link">Регистрация</a>
         </nav>
     </header>
+
     <main role="main">
         <div aria-live="polite" id="notifications" class="notifications"></div>
         {% block content %}{% endblock %}
     </main>
+
+    <!-- Губка Боб: вне main, прижат к футеру -->
+    <div class="spongebob-hero" aria-hidden="true">
+        <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <defs>
+                <radialGradient id="spongeGrad" cx="50%" cy="30%">
+                    <stop offset="0%" stop-color="#fce88a" stop-opacity="0.7"/>
+                    <stop offset="100%" stop-color="#f4d03f" stop-opacity="0"/>
+                </radialGradient>
+
+                <clipPath id="blinkLeft">
+                    <rect x="100" y="0" width="100" height="200">
+                        <animate attributeName="y"
+                            values="0; 0; 160; 160; 0; 0"
+                            keyTimes="0; 0.55; 0.65; 0.75; 0.85; 1"
+                            dur="5s" repeatCount="indefinite"/>
+                    </rect>
+                </clipPath>
+
+                <clipPath id="blinkRight">
+                    <rect x="200" y="0" width="100" height="200">
+                        <animate attributeName="y"
+                            values="0; 0; 160; 160; 0; 0"
+                            keyTimes="0; 0.55; 0.65; 0.75; 0.85; 1"
+                            dur="5s" repeatCount="indefinite"/>
+                    </rect>
+                </clipPath>
+            </defs>
+
+            <rect x="40" y="0" width="320" height="200" fill="#f4d03f"/>
+            <rect x="40" y="0" width="320" height="200" fill="url(#spongeGrad)"/>
+
+            <ellipse cx="90" cy="40" rx="12" ry="8" fill="#c9a00a" opacity="0.55"/>
+            <ellipse cx="330" cy="30" rx="14" ry="10" fill="#c9a00a" opacity="0.55"/>
+            <ellipse cx="60" cy="130" rx="10" ry="7" fill="#c9a00a" opacity="0.5"/>
+            <ellipse cx="350" cy="140" rx="11" ry="8" fill="#c9a00a" opacity="0.5"/>
+            <ellipse cx="120" cy="170" rx="9" ry="6" fill="#c9a00a" opacity="0.45"/>
+            <ellipse cx="290" cy="180" rx="10" ry="6" fill="#c9a00a" opacity="0.45"/>
+            <ellipse cx="70" cy="90" rx="7" ry="5" fill="#c9a00a" opacity="0.45"/>
+            <ellipse cx="340" cy="80" rx="8" ry="5" fill="#c9a00a" opacity="0.45"/>
+            <ellipse cx="200" cy="30" rx="6" ry="4" fill="#c9a00a" opacity="0.4"/>
+            <circle cx="250" cy="50" r="5" fill="#c9a00a" opacity="0.4"/>
+            <circle cx="150" cy="55" r="4" fill="#c9a00a" opacity="0.4"/>
+            <circle cx="105" cy="25" r="5" fill="#c9a00a" opacity="0.4"/>
+            <circle cx="310" cy="180" r="6" fill="#c9a00a" opacity="0.4"/>
+            <ellipse cx="95" cy="185" rx="8" ry="5" fill="#c9a00a" opacity="0.4"/>
+
+            <g clip-path="url(#blinkLeft)">
+                <ellipse cx="150" cy="105" rx="45" ry="48" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
+                <ellipse cx="155" cy="110" rx="22" ry="25" fill="#2a7fc4"/>
+                <ellipse cx="155" cy="112" rx="12" ry="14" fill="#000000"/>
+                <ellipse cx="148" cy="100" rx="7" ry="8" fill="#ffffff"/>
+                <circle cx="162" cy="118" r="3" fill="#ffffff" opacity="0.7"/>
+                <ellipse cx="135" cy="130" rx="6" ry="4" fill="#ffb6c1" opacity="0.5"/>
+            </g>
+
+            <g clip-path="url(#blinkRight)">
+                <ellipse cx="250" cy="105" rx="45" ry="48" fill="#ffffff" stroke="#1a1a1a" stroke-width="3"/>
+                <ellipse cx="255" cy="110" rx="22" ry="25" fill="#2a7fc4"/>
+                <ellipse cx="255" cy="112" rx="12" ry="14" fill="#000000"/>
+                <ellipse cx="248" cy="100" rx="7" ry="8" fill="#ffffff"/>
+                <circle cx="262" cy="118" r="3" fill="#ffffff" opacity="0.7"/>
+                <ellipse cx="265" cy="130" rx="6" ry="4" fill="#ffb6c1" opacity="0.5"/>
+            </g>
+
+            <line x1="118" y1="75" x2="108" y2="58" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+            <line x1="148" y1="62" x2="148" y2="42" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+            <line x1="178" y1="75" x2="188" y2="58" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+            <line x1="222" y1="75" x2="212" y2="58" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+            <line x1="252" y1="62" x2="252" y2="42" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+            <line x1="282" y1="75" x2="292" y2="58" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+
+            <ellipse cx="200" cy="140" rx="14" ry="20" fill="#f4d03f" stroke="#c9a00a" stroke-width="2"/>
+            <ellipse cx="196" cy="133" rx="4" ry="6" fill="#fce88a" opacity="0.7"/>
+
+            <ellipse cx="95" cy="150" rx="18" ry="10" fill="#ff8fa3" opacity="0.55"/>
+            <ellipse cx="305" cy="150" rx="18" ry="10" fill="#ff8fa3" opacity="0.55"/>
+
+            <circle cx="100" cy="138" r="2" fill="#c9a00a" opacity="0.75"/>
+            <circle cx="112" cy="143" r="2" fill="#c9a00a" opacity="0.75"/>
+            <circle cx="105" cy="150" r="2" fill="#c9a00a" opacity="0.75"/>
+            <circle cx="298" cy="138" r="2" fill="#c9a00a" opacity="0.75"/>
+            <circle cx="288" cy="143" r="2" fill="#c9a00a" opacity="0.75"/>
+            <circle cx="295" cy="150" r="2" fill="#c9a00a" opacity="0.75"/>
+        </svg>
+    </div>
+
     <footer role="contentinfo">
         <p>AccessEvent — платформа инклюзивных мероприятий</p>
         <p><small>Визуальные уведомления вместо звуковых — для всех пользователей</small></p>
     </footer>
+
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
