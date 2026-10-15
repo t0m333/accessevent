@@ -1,4 +1,4 @@
-﻿name: Day4 Frontend Check
+name: Day4 Frontend Check
 on: push
 
 jobs:
@@ -6,32 +6,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check templates
+      - name: Check templates exist
         run: |
-          test -f templates/base.html || echo "FAIL: base.html"
-          test -f templates/index.html || echo "FAIL: index.html"
-          test -f templates/events.html || echo "FAIL: events.html"
-          test -f templates/login.html || echo "FAIL: login.html"
-          test -f templates/register.html || echo "FAIL: register.html"
-          test -f templates/profile.html || echo "FAIL: profile.html"
-      - name: Check static
+          test -f templates/base.html
+          test -f templates/index.html
+          test -f templates/events.html
+          test -f templates/login.html
+          test -f templates/register.html
+          test -f templates/profile.html
+      - name: Check static files exist
         run: |
-          test -f static/css/style.css || echo "FAIL: style.css"
-          test -f static/js/main.js || echo "FAIL: main.js"
-          SIZE_CSS=$(wc -c < static/css/style.css)
-          SIZE_JS=$(wc -c < static/js/main.js)
-          echo "style.css bytes: $SIZE_CSS"
-          echo "main.js bytes: $SIZE_JS"
-      - name: Check media queries in CSS
-        run: |
-          grep -q "@media" static/css/style.css && echo "PASS: media queries" || echo "FAIL: no media"
-      - name: Check showNotification in JS
-        run: |
-          grep -q "showNotification" static/js/main.js && echo "PASS: showNotification" || echo "FAIL: no showNotification"
-      - name: Check ARIA attributes in templates
-        run: |
-          grep -l "aria-label" templates/*.html && echo "PASS: aria-label" || echo "FAIL: no aria"
-          grep -l "role=" templates/*.html && echo "PASS: role" || echo "FAIL: no role"
+          test -f static/css/style.css
+          test -f static/js/main.js
+      - name: Check media queries
+        run: grep -q "@media" static/css/style.css
+      - name: Check showNotification
+        run: grep -q "showNotification" static/js/main.js
+      - name: Check ARIA in templates
+        run: grep -q "aria-label" templates/base.html
       - name: Syntax check app.py
         run: python -m py_compile app.py
-      - run: "'echo PASS: Day4 Frontend Check completed'"
+      - name: Done
+        run: echo "Day4 Frontend Check completed"
